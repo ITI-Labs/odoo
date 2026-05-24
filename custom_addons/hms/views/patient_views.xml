@@ -38,7 +38,8 @@
                     <group>
                         <group string="Personal Info">
                             <field name="birth_date"/>
-                            <field name="age"/>
+                            <field name="age"readonly="1"/> 
+                            <field name="email"/>
                             <field name="address"/>
                         </group>
                         <group string="Medical Info">

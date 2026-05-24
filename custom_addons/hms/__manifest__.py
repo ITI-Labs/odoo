@@ -10,5 +10,6 @@
         'views/doctor_views.xml',
         'views/patient_views.xml',
         'views/menus.xml',
+        'views/customer_views.xml',
     ],     
 }
