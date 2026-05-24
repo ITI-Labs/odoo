@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <record id="view_hms_patient_list" model="ir.ui.view">
         <field name="name">hms.patient.list</field>
         <field name="model">hms.patient</field>
@@ -12,6 +11,7 @@
                 <field name="age"/>
                 <field name="blood_type"/>
                 <field name="pcr"/>
+                <field name="state"/>
             </list>
         </field>
     </record>
@@ -21,6 +21,9 @@
         <field name="model">hms.patient</field>
         <field name="arch" type="xml">
             <form string="Patient">
+                <header>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
                 <sheet>
                     <field name="image" widget="image" class="oe_avatar" options="{'size': [128, 128]}"/>
 
@@ -31,6 +34,7 @@
                             <field name="last_name" placeholder="Last Name"/>
                         </h1>
                     </div>
+
                     <group>
                         <group string="Personal Info">
                             <field name="birth_date"/>
@@ -39,13 +43,33 @@
                         </group>
                         <group string="Medical Info">
                             <field name="blood_type"/>
-                            <field name="cr_ratio"/>
                             <field name="pcr"/>
+                            <field name="cr_ratio"/>
                         </group>
                     </group>
+
+                    <group string="Hospital Assignment Setup">
+                        <group>
+                            <field name="department_id"/>
+                            <field name="department_capacity"/>
+                        </group>
+                        <group>
+                            <field name="doctor_ids" widget="many2many_tags" readonly="not department_id"/>
+                        </group>
+                    </group>
+
                     <notebook>
-                        <page string="Medical History">
+                        <page string="Medical History" invisible="age &lt; 50">
                             <field name="history" placeholder="Enter patient medical history here..."/>
+                        </page>
+                        <page string="Log History Data">
+                            <field name="log_ids">
+                                <list>
+                                    <field name="create_uid"/>
+                                    <field name="create_date"/>
+                                    <field name="description"/>
+                                </list>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>
@@ -58,17 +82,4 @@
         <field name="res_model">hms.patient</field>
         <field name="view_mode">list,form</field>
     </record>
-
-    <menuitem
-        id="menu_hms_root"
-        name="HMS"
-        sequence="10"/>
-
-    <menuitem
-        id="menu_hms_patients"
-        name="Patients"
-        parent="menu_hms_root"
-        action="action_hms_patient"
-        sequence="10"/>
-
 </odoo>

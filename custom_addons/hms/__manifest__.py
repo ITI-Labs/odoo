@@ -6,9 +6,9 @@
     'author': 'Wafaey',
     'depends': ['base'],       
     'data': [
-        'views/patient_views.xml',
-        'views/doctor_views.xml',
         'views/department_views.xml',
-        'views/menu.xml',
+        'views/doctor_views.xml',
+        'views/patient_views.xml',
+        'views/menus.xml',
     ],     
 }
