@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_patient_status">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="hms.report_patient_status_document" t-lang="o.env.user.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_patient_status_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <div class="row">
+                    <div class="col-8">
+                        <h5>OSD 4</h5>
+                        <h2>HMS - Patient Status Report</h2>
+                    </div>
+                    <div class="col-4 text-center">
+                        <img t-att-src="'data:image/png;base64,' + o.image" class="img-fluid" style="max-width: 180px; max-height: 180px;" alt="Patient Image"/>
+                    </div>
+                </div>
+                <hr/>
+
+                <div class="row">
+                    <div class="col-6">
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Name:</strong></td>
+                                <td><span t-field="o.first_name"/> <span t-field="o.last_name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Age:</strong></td>
+                                <td><span t-field="o.age"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Department:</strong></td>
+                                <td><span t-field="o.department_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Doctors:</strong></td>
+                                <td>
+                                    <t t-foreach="o.doctor_ids" t-as="doc">
+                                        <span t-field="doc.first_name"/> <span t-field="doc.last_name"/>
+                                        <t t-if="!doc_last">, </t>
+                                    </t>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Birth date:</strong></td>
+                                <td><span t-field="o.birth_date"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>PCR:</strong></td>
+                                <td><span t-field="o.cr_ratio"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Blood Type:</strong></td>
+                                <td><span t-field="o.blood_type"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Email:</strong></td>
+                                <td><span t-field="o.email"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <hr/>
+
+                <h4>Log History</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Date</th>
+                            <th>Info</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="o.log_ids" t-as="log">
+                            <tr>
+                                <td><span t-field="log.create_uid.name"/></td>
+                                <td><span t-field="log.create_date"/></td>
+                                <td><span t-field="log.description"/></td>
+                            </tr>
+                        </t>
+                        <t t-if="not o.log_ids">
+                            <tr>
+                                <td colspan="3" class="text-center">No log history available.</td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <record id="action_report_patient_status" model="ir.actions.report">
+        <field name="name">Patient Status Report</field>
+        <field name="model">hms.patient</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hms.report_patient_status</field>
+        <field name="report_file">hms.report_patient_status</field>
+        <field name="binding_model_id" ref="model_hms_patient"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Patient_Status_Report_%s' % (object.first_name + '_' + object.last_name)</field>
+    </record>
+</odoo>

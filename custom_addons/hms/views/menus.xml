@@ -4,5 +4,5 @@
 
     <menuitem id="menu_hms_patients" name="Patients" parent="menu_hms_root" action="action_hms_patient" sequence="10"/>
     <menuitem id="menu_hms_departments" name="Departments" parent="menu_hms_root" action="action_hms_department" sequence="20"/>
-    <menuitem id="menu_hms_doctors" name="Doctors" parent="menu_hms_root" action="action_hms_doctor" sequence="30"/>
+    <menuitem id="menu_hms_doctors" name="Doctors" parent="menu_hms_root" action="action_hms_doctor" sequence="30" groups="hms.group_hms_manager"/>
 </odoo>

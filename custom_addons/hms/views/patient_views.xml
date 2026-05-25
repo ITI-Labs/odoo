@@ -54,7 +54,7 @@
                             <field name="department_id"/>
                             <field name="department_capacity"/>
                         </group>
-                        <group>
+                        <group groups="hms.group_hms_manager">
                             <field name="doctor_ids" widget="many2many_tags" readonly="not department_id"/>
                         </group>
                     </group>
